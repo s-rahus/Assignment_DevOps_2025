@@ -9,7 +9,7 @@ pipeline {
     }
 
     tools {
-        jdk 'JDK 21'  // Ensure JDK 11 (or your preferred JDK) is configured in Jenkins
+        jdk 'JDK21'  // Ensure JDK 11 (or your preferred JDK) is configured in Jenkins
         maven 'Maven 3.9.9'  // Ensure Maven is configured in Jenkins
     }
 
