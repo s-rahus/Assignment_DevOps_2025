@@ -1,88 +1,54 @@
 pipeline {
     agent any  // Runs the pipeline on any available agent
 
-    environment {
-        // Define environment-specific variables
-        BUILD_ENV = 'development'
-        TEST_ENV = 'test'
-        PROD_ENV = 'production'
-    }
-
     tools {
-        jdk 'JDK21'  // Ensure JDK 11 (or your preferred JDK) is configured in Jenkins
-        maven 'Maven'  // Ensure Maven is configured in Jenkins
+        jdk 'JDK21'  // Ensure you have JDK 11 (or your preferred JDK) configured in Jenkins
+        maven 'Maven'  // This assumes you've configured Maven 3.6.3 in Jenkins (Configure in "Manage Jenkins > Global Tool Configuration")
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from version control
+                // This step checks out the code from the repository (e.g., Git)
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                // Set build environment to 'build'
-                script {
-                    env.BUILD_ENV = 'build'
-                }
-                // Maven clean install to build the project
-                sh 'mvn clean install -Denv=${BUILD_ENV}'
+                // Clean and build the project using Maven
+                sh 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                // Set test environment to 'test'
-                script {
-                    env.TEST_ENV = 'test'
-                }
-                // Run tests using Maven
-                sh 'mvn test -Denv=${TEST_ENV}'
+                // Run the tests using Maven (assuming you have tests configured)
+                sh 'mvn test'
             }
         }
 
-        stage('Deploy to Staging') {
-            when {
-                branch 'develop'  // This stage only runs for the develop branch
-            }
+        stage('Run') {
             steps {
-                // Deploy to staging (this could be any deployment mechanism)
-                script {
-                    echo "Deploying to Staging Environment"
-                }
-            }
-        }
-
-        stage('Deploy to Prod') {
-            when {
-                branch 'master'  // This stage only runs for the master branch
-            }
-            steps {
-                // Set prod environment to 'prod'
-                script {
-                    env.PROD_ENV = 'prod'
-                }
-                // Deploy to production (this could be any deployment mechanism)
-                script {
-                    echo "Deploying to Production Environment"
-                }
+                // You can run the application if desired, for example:
+                sh 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
             }
         }
     }
 
     post {
+        // Post actions such as archiving test results, cleanup, etc.
         always {
-            // Always run cleanup or archiving steps
-            echo 'Cleaning up after build...'
+            // Archive the build artifacts and test results (optional)
+            archiveArtifacts '**/target/*.jar'  // Archive JAR files if you want to keep them
+            junit '**/target/test-*.xml'  // Archive test reports (ensure Maven is configured to generate XML reports)
         }
-
+       
         success {
             // Actions to take when the build is successful
-            echo 'Build, test, and deployment succeeded!'
+            echo 'Build and tests passed successfully!'
         }
-
+       
         failure {
             // Actions to take when the build fails
             echo 'Build or tests failed!'
