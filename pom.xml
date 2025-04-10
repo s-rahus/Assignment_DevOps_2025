@@ -17,7 +17,10 @@
     <maven.compiler.release>21</maven.compiler.release> <!-- Using JDK 21 -->
   </properties>
 
-  <dependencies>
+  
+    <dependencies>
+       
+
     <!-- No dependencies for now, you can add them as needed -->
   </dependencies>
 
@@ -26,7 +29,7 @@
       <!-- Maven Compiler Plugin to compile Java code with JDK 21 -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.9.9</version> <!-- Maven 3.9.9 compatible version -->
+        <version>3.11.0</version> <!-- Maven 3.9.9 compatible version -->
         <configuration>
           <source>21</source>  <!-- Use JDK 21 source compatibility -->
           <target>21</target>  <!-- Use JDK 21 target compatibility -->
