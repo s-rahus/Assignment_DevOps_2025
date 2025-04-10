@@ -17,21 +17,21 @@ pipeline {
         stage('Build') {
             steps {
                 // Clean and build the project using Maven
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
                 // Run the tests using Maven (assuming you have tests configured)
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Run') {
             steps {
                 // You can run the application if desired, for example:
-                sh 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
+                bat 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
             }
         }
     }
