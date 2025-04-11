@@ -6,6 +6,16 @@ pipeline {
         maven 'Maven'  // This assumes you've configured Maven 3.6.3 in Jenkins (Configure in "Manage Jenkins > Global Tool Configuration")
     }
 
+
+	environment {
+        
+        STAGING_ENV = 'staging'
+        PROD_ENV = 'production'
+        APP_NAME = 'my-app-1.0-SNAPSHOT'  // Update this with your app's name
+        JAR_PATH = 'target/my-app-1.0-SNAPSHOT.jar'  // Path to the .jar file
+    }
+    
+    
     stages {
         stage('Checkout') {
             steps {
@@ -28,14 +38,48 @@ pipeline {
             }
         }
 
-        //stage('Run') {
-          //  steps {
-                // You can run the application if desired, for example:
-                //bat 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
-            //}
-        //}
+        stage('Run') {
+            steps {
+                 //You can run the application if desired, for example:
+                bat 'java -jar target/my-app-1.0-SNAPSHOT.jar'  // Replace with your actual JAR file path
+            }
+        }
     }
 
+
+	stage('Deploy to Staging') {
+            steps {
+                echo "Deploying to ${env.STAGING_ENV} environment..."
+                // Simulate deploying to staging environment by copying .jar to the staging directory
+                bat "mkdir -p environments\\staging"
+                bat "copy ${env.JAR_PATH} environments\\staging\\"
+                // Run the app in the staging environment (using different args or settings)
+                bat "java -jar environments\\staging\\${env.APP_NAME}.jar --env=staging"
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                beforeInput true
+                expression {
+                    return currentBuild.currentResult == 'SUCCESS'
+                }
+            }
+            input {
+                message 'Approve deployment to production?'
+                ok 'Deploy'
+            }
+            steps {
+                echo "Deploying to ${env.PROD_ENV} environment..."
+                // Simulate deploying to production environment by copying .jar to the production directory
+                bat "mkdir -p environments\\production"
+                bat "copy ${env.JAR_PATH} environments\\production\\"
+                // Run the app in the production environment (using different args or settings)
+                bat "java -jar environments\\production\\${env.APP_NAME}.jar --env=production"
+            }
+        }
+        
+        
     post {
         // Post actions such as archiving test results, cleanup, etc.
         //always {
