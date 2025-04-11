@@ -44,10 +44,7 @@ pipeline {
                 bat 'java -jar target/my-app-1.0-SNAPSHOT.jar'  // Replace with your actual JAR file path
             }
         }
-    }
-
-
-	stage('Deploy to Staging') {
+        stage('Deploy to Staging') {
             steps {
                 echo "Deploying to ${env.STAGING_ENV} environment..."
                 // Simulate deploying to staging environment by copying .jar to the staging directory
@@ -78,6 +75,11 @@ pipeline {
                 bat "java -jar environments\\production\\${env.APP_NAME}.jar --env=production"
             }
         }
+        
+    }
+
+
+	
         
         
     post {
