@@ -86,27 +86,17 @@
         </plugin>
         
 		 <plugin>
-		  <artifactId>maven-assembly-plugin</artifactId>
-		  <executions>
-		    <execution>
-		      <phase>package</phase>
-		      <goals>
-		        <goal>single</goal>
-		      </goals>
-		    </execution>
-		  </executions>
-		  <configuration>
-		    <archive>
-		      <manifest>
-		        <addClasspath>true</addClasspath>
-		        <mainClass>com.mycompany.app.App</mainClass>
-		      </manifest>
-		    </archive>
-		    <descriptorRefs>
-		      <descriptorRef>jar-with-dependencies</descriptorRef>
-		    </descriptorRefs>
-		  </configuration>
-		</plugin> 
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                  <archive>
+                      <manifestEntries>
+                          <Main-Class>com.mycompany.app.App</Main-Class> <!-- Replace with your main class -->
+                      </manifestEntries>
+                  </archive>
+              </configuration>
+          </plugin>
       </plugins>
     </pluginManagement>
   </build>
