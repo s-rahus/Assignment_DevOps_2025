@@ -48,7 +48,7 @@ pipeline {
             steps {
                 echo "Deploying to ${env.STAGING_ENV} environment..."
                 // Simulate deploying to staging environment by copying .jar to the staging directory
-                bat "mkdir -p environments\\staging"
+                //bat "mkdir -p environments\\staging"
                 bat "copy '${env.JAR_PATH}' environments\\staging\\"
                 // Run the app in the staging environment (using different args or settings)
                 bat "java -jar environments\\staging\\${env.APP_NAME}.jar --env=staging"
