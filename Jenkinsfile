@@ -38,11 +38,11 @@ pipeline {
 
     post {
         // Post actions such as archiving test results, cleanup, etc.
-        always {
+        //always {
             // Archive the build artifacts and test results (optional)
-            archiveArtifacts '**/target/*.jar'  // Archive JAR files if you want to keep them
-            junit '**/target/test-*.xml'  // Archive test reports (ensure Maven is configured to generate XML reports)
-        }
+          //  archiveArtifacts '**/target/*.jar'  // Archive JAR files if you want to keep them
+            //junit '**/target/test-*.xml'  // Archive test reports (ensure Maven is configured to generate XML reports)
+        //}
        
         success {
             // Actions to take when the build is successful
