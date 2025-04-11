@@ -28,6 +28,7 @@ pipeline {
             steps {
                 // Clean and build the project using Maven
                 bat 'mvn clean install'
+                bat 'mvn clean package'
             }
         }
 
