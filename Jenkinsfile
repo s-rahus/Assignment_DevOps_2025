@@ -31,7 +31,7 @@ pipeline {
         stage('Run') {
             steps {
                 // You can run the application if desired, for example:
-                bat 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
+                //bat 'java -jar target/my-application.jar'  // Replace with your actual JAR file path
             }
         }
     }
