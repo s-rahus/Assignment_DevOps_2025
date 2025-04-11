@@ -12,7 +12,7 @@ pipeline {
         STAGING_ENV = 'staging'
         PROD_ENV = 'production'
         APP_NAME = 'my-app-1.0-SNAPSHOT'  // Update this with your app's name
-        JAR_PATH = 'target/my-app-1.0-SNAPSHOT.jar'  // Path to the .jar file
+        JAR_PATH = 'target\\my-app-1.0-SNAPSHOT.jar'  // Path to the .jar file
     }
     
     
