@@ -70,7 +70,7 @@ pipeline {
             steps {
                 echo "Deploying to ${env.PROD_ENV} environment..."
                 // Simulate deploying to production environment by copying .jar to the production directory
-                //bat "mkdir -p environments\\production"
+                bat "if not exist environments\\production mkdir -p environments\\production"
                 bat "copy ${env.JAR_PATH} environments\\production\\"
                 // Run the app in the production environment (using different args or settings)
                 bat "java -jar environments\\production\\${env.APP_NAME}.jar --env=production"
